@@ -26,7 +26,15 @@ public class RotateObject : MonoBehaviour
 
 	void RotateAxisZ()
 	{
-		Vector3 delta = new Vector3(0, 0, Input.GetAxis("Mouse Y") + -Input.GetAxis("Mouse X"));
+		Vector2 position = Camera.main.WorldToScreenPoint(transform.position);
+
+		float x = Input.GetAxis("Mouse X");
+		float y = Input.GetAxis("Mouse Y");
+
+		x = (Input.mousePosition.y > position.y) ? x : -x;
+		y = (Input.mousePosition.x > position.x) ? y : -y;
+
+		Vector3 delta = new Vector3(0, 0, y - x);
 		delta = delta * Time.deltaTime;
 		transform.Rotate(delta * speed, Space.World);
 	}
