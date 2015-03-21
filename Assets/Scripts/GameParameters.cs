@@ -18,6 +18,7 @@ public struct UIColours
     public Color button_Highlighted;
     public Color button_Pressed;
     public Color button_Disabled;
+	public Color image;
 }
 
 public class GameParameters : ScriptableObject 
@@ -39,8 +40,10 @@ public class GameParameters : ScriptableObject
     public string m_Version = "alpha.1";
 
     public Texture2D[] m_Textures = null;
-	public GameObject m_DefaultModel = null;
+	public TargetModel m_DefaultModel = null;
 	public TargetModel[] m_LevelModels = null;
 
     public UIColours m_UIColours;
+
+	public float m_TutorialMinimumTime = 3.0f;
 }

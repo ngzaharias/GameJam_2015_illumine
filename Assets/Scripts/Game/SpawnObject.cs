@@ -16,7 +16,8 @@ public class SpawnObject : MonoBehaviour
 
     void Spawn()
     {
-        GameObject obj = Instantiate(objectToSpawn, transform.position, transform.rotation) as GameObject;
+        GameObject obj = Instantiate(objectToSpawn) as GameObject;
+		obj.transform.position = Camera.main.transform.position;
         obj.GetComponent<Rigidbody>().AddForce(transform.forward * forceAmount);
     }
 }

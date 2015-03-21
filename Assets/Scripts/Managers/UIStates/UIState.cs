@@ -8,9 +8,9 @@ public class UIState : MonoBehaviour
 	[HideInInspector]
 	public Animator m_animator = null;
 
-	private bool m_enabled = false;
+	protected bool m_enabled = false;
 
-	void Awake()
+	protected virtual void Awake()
 	{
 		if (m_key.CompareTo("NULL") == 0)
 		{
@@ -20,12 +20,12 @@ public class UIState : MonoBehaviour
 		m_animator = GetComponent<Animator>();
 	}
 
-	void Start()
+	protected virtual void Start()
 	{
 		UIStateManager.Instance.RegisterState(this);
 	}
 
-	void Update()
+	protected virtual void Update()
 	{
 
 	}

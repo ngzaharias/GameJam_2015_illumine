@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 	private Animator m_animator = null;
 	private TargetModel m_currentModel = null;
 	public TargetModel CurrentModel { get { return m_currentModel; } }
-	private int m_currentLevel = 0;
+	private int m_currentLevel = -1;
 
 	void Awake()
 	{
@@ -29,16 +29,6 @@ public class LevelManager : MonoBehaviour
 		SpawnDefaultModel();
 	}
 
-	public void StartLevel()
-	{
-		if (m_currentLevel >= GameParameters.Instance.m_LevelModels.Length)
-			m_currentLevel = 0;
-
-		m_animator.Play("Enter");
-
-		UIStateManager.Instance.SetState("GAME_MENU");
-	}
-
 	public void NextLevel()
 	{
 		++m_currentLevel;
@@ -46,6 +36,7 @@ public class LevelManager : MonoBehaviour
 		{
 			m_currentModel = GameParameters.Instance.m_LevelModels[m_currentLevel];
 			SpawnLevelModel();
+			UIStateManager.Instance.SetState("GAME_MENU");
 		}
 		else
 		{
@@ -67,8 +58,8 @@ public class LevelManager : MonoBehaviour
 
 		m_currentModel = GameParameters.Instance.m_LevelModels[m_currentLevel];
 
-		m_model = Instantiate(GameParameters.Instance.m_LevelModels[m_currentLevel].model, 
-			Vector3.zero, Quaternion.identity) as GameObject;
+		m_model = Instantiate(m_currentModel.model, Vector3.zero, Quaternion.identity) as GameObject;
+
 		m_model.transform.parent = GameManager.Instance.transform;
 		m_model.transform.eulerAngles = new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
 	}
@@ -77,8 +68,9 @@ public class LevelManager : MonoBehaviour
 	{
 		DestroyModel();
 
-		m_model = Instantiate(GameParameters.Instance.m_DefaultModel, 
-			Vector3.zero, Quaternion.identity) as GameObject;
+		m_currentModel = GameParameters.Instance.m_DefaultModel;
+
+		m_model = Instantiate(m_currentModel.model, Vector3.zero, Quaternion.identity) as GameObject;
 		m_model.transform.parent = GameManager.Instance.transform;
 	}
 

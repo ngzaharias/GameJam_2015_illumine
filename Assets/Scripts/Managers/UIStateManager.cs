@@ -17,6 +17,18 @@ public class UIStateManager : MonoBehaviour
 	private static List<UIState> m_scenesStack = new List<UIState>();
 	private static Dictionary<string, UIState> m_scenesDictionary = new Dictionary<string, UIState>();
 
+	public UIState CurrentState
+	{
+		get
+		{
+			if (m_scenesStack.Count > 0)
+			{
+				return m_scenesStack[m_scenesStack.Count - 1];
+			}
+			return null;
+		}
+	}
+
 	void Awake()
 	{
 		m_instance = this;

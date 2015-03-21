@@ -7,12 +7,14 @@ public class UIComponentColours : MonoBehaviour
     protected Button[] m_buttons = null;
     protected Text[] m_texts = null;
 	protected InputField[] m_inputFields = null;
+	protected Image[] m_images = null;
 
     void Awake()
     {
         m_buttons = GetComponentsInChildren<Button>();
 		m_texts = GetComponentsInChildren<Text>();
 		m_inputFields = GetComponentsInChildren<InputField>();
+		m_images = GetComponentsInChildren<Image>();
     }
 
     void Start()
@@ -50,6 +52,15 @@ public class UIComponentColours : MonoBehaviour
 
 			m_inputFields[i].colors = colourBlock;
 			m_inputFields[i].selectionColor = colours.button_Normal;
+		}
+
+		for (int i = 0; i < m_images.Length; ++i)
+		{
+			if (m_images[i].GetComponent<Button>() == null &&
+				m_images[i].GetComponent<InputField>() == null)
+			{
+				m_images[i].color = colours.image;
+			}
 		}
     }
 }

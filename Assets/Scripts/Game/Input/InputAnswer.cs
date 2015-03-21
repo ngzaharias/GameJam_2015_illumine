@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 
-[RequireComponent(typeof(Animator))]
 public class InputAnswer : MonoBehaviour 
 {
 	private Animator m_animator = null;
@@ -40,7 +39,10 @@ public class InputAnswer : MonoBehaviour
 
 	void IncorrectAnswer()
 	{
-		m_animator.SetTrigger("Shake");
-		m_inputField.text = "";
+		if (m_animator != null)
+		{
+			m_animator.SetTrigger("Shake");
+			m_inputField.text = "";
+		}
 	}
 }
