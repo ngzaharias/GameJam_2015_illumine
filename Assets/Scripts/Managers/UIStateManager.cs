@@ -14,16 +14,17 @@ public class UIStateManager : MonoBehaviour
 	}
 
 	public UIState m_startState = null;
-	private static List<UIState> m_scenesStack = new List<UIState>();
-	private static Dictionary<string, UIState> m_scenesDictionary = new Dictionary<string, UIState>();
+	private static List<UIState> m_statesStack = new List<UIState>();
+	private static List<UIState> m_toggleStack = new List<UIState>();
+	private static Dictionary<string, UIState> m_statesDictionary = new Dictionary<string, UIState>();
 
 	public UIState CurrentState
 	{
 		get
 		{
-			if (m_scenesStack.Count > 0)
+			if (m_statesStack.Count > 0)
 			{
-				return m_scenesStack[m_scenesStack.Count - 1];
+				return m_statesStack[m_statesStack.Count - 1];
 			}
 			return null;
 		}
@@ -44,23 +45,23 @@ public class UIStateManager : MonoBehaviour
 
 	public void RegisterState(UIState state)
 	{
-		if (m_scenesDictionary.ContainsKey(state.m_key) == false)
+		if (m_statesDictionary.ContainsKey(state.m_key) == false)
 		{
-			m_scenesDictionary[state.m_key] = state;
+			m_statesDictionary[state.m_key] = state;
 		}
 	}
 
 	public void UnregisterState(UIState state)
 	{
-		if (m_scenesDictionary.ContainsKey(state.m_key))
+		if (m_statesDictionary.ContainsKey(state.m_key))
 		{
-			m_scenesDictionary.Remove(state.m_key);
+			m_statesDictionary.Remove(state.m_key);
 		}
 	}
 
 	public void ChangeState(string key)
 	{
-		if (m_scenesDictionary.ContainsKey(key) && m_scenesStack[m_scenesStack.Count-1].m_key != key)
+		if (m_statesDictionary.ContainsKey(key) && m_statesStack[m_statesStack.Count-1].m_key != key)
 		{
 			PopState();
 			PushState(key);
@@ -69,34 +70,57 @@ public class UIStateManager : MonoBehaviour
 
 	public void PushState(string key)
 	{
-		if (m_scenesDictionary.ContainsKey(key))
+		if (m_statesDictionary.ContainsKey(key))
 		{
-			if (m_scenesStack.Contains(m_scenesDictionary[key]) == false)
+			if (m_statesStack.Contains(m_statesDictionary[key]) == false)
 			{
-				m_scenesStack.Add(m_scenesDictionary[key]);
-				m_scenesStack[m_scenesStack.Count - 1].Enable();
+				m_statesStack.Add(m_statesDictionary[key]);
+				m_statesStack[m_statesStack.Count - 1].Enable();
 			}
 		}
 	}
 
 	public void PopState()
 	{
-		if (m_scenesStack.Count > 0)
+		if (m_statesStack.Count > 0)
 		{
-			m_scenesStack[m_scenesStack.Count - 1].Disable();
-			m_scenesStack.Remove(m_scenesStack[m_scenesStack.Count - 1]);
+			m_statesStack[m_statesStack.Count - 1].Disable();
+			m_statesStack.Remove(m_statesStack[m_statesStack.Count - 1]);
 		}
 	}
 
 	public void SetState(string key)
 	{
-		if (m_scenesStack.Count == 1 && m_scenesStack[0].m_key != key)
+		if (m_statesDictionary.ContainsKey(key))
 		{
-			for (int i = m_scenesStack.Count - 1; i >= 0; --i)
+			for (int i = m_statesStack.Count - 1; i >= 0; --i)
 			{
 				PopState();
 			}
 			PushState(key);
+		}
+	}
+
+	public void ToggleState(string key)
+	{
+		UIState state = m_statesDictionary[key];
+		int index = m_toggleStack.IndexOf(state);
+
+		// not recorded, push it on and record it
+		if (index == -1)
+		{
+			m_toggleStack.Add(state);
+			PushState(key);
+		}
+		//	already recorded, pop everything above and including the state
+		else
+		{
+			int count = m_statesStack.Count-1 - index;
+			for (int i = 0; i < count; ++i)
+			{
+				m_toggleStack.Remove(state);
+				PopState();
+			}
 		}
 	}
 }

@@ -40,16 +40,8 @@ public class LevelManager : MonoBehaviour
 		}
 		else
 		{
-			ExitLevel();
-		}
-	}
 
-	public void ExitLevel()
-	{
-		m_animator.Play("Exit");
-		SpawnDefaultModel();
-		m_model.transform.rotation = Quaternion.identity;
-		UIStateManager.Instance.SetState("MAIN_MENU");
+		}
 	}
 
 	void SpawnLevelModel()

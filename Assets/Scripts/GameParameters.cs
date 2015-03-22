@@ -45,5 +45,6 @@ public class GameParameters : ScriptableObject
 
     public UIColours m_UIColours;
 
-	public float m_TutorialMinimumTime = 3.0f;
+	public float m_TutorialStateTime = 5.0f;
+	public float m_TutorialDragDistance = 100.0f;
 }
