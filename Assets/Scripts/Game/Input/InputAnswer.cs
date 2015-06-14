@@ -16,20 +16,18 @@ public class InputAnswer : MonoBehaviour
 	public void Submit(string answer)
 	{
 		answer = answer.ToLower();
-		string[] names = LevelManager.Instance.CurrentModel.names;
-		for (int i = 0; i < names.Length; ++i)
+		string name = LevelManager.Instance.CurrentLevel.answer.ToLower();
+		if (name.CompareTo(answer) == 0)
 		{
-			string name = names[i].ToLower();
-			if (name.CompareTo(answer) == 0)
-			{
-				CorrectAnswer();
-				return;
-			}
+			CorrectAnswer();
 		}
-		IncorrectAnswer();
+		else
+		{
+			IncorrectAnswer();
+		}
 	}
 
-	void CorrectAnswer()
+	private void CorrectAnswer()
 	{
 		float duration;
 		GameManager.Instance.PlayVictoryParticles(out duration);
@@ -37,7 +35,7 @@ public class InputAnswer : MonoBehaviour
 		m_inputField.text = "";
 	}
 
-	void IncorrectAnswer()
+	private void IncorrectAnswer()
 	{
 		if (m_animator != null)
 		{

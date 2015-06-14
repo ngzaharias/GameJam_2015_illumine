@@ -4,10 +4,10 @@ public class Timer
 {
 	protected bool m_running;
 
-	protected float m_duration;
-	protected float m_startTime;
-	protected float m_pauseTime;
-	protected float m_endTime;
+	protected double m_duration;
+	protected double m_startTime;
+	protected double m_pauseTime;
+	protected double m_endTime;
 
 	public Timer() 
 	{
@@ -70,17 +70,37 @@ public class Timer
 		return false;
 	}
 
-	public double GetElapsedTime() 
+	public double Duration
 	{
-		return m_duration - GetRemainingTime();
+		get { return m_duration; }
+		set { m_duration = value; }
 	}
 
-	public double GetRemainingTime() 
+	public double ElapsedTime
 	{
-		if (m_running)
+		get
 		{
-			return m_endTime - Time.time;
+			return m_duration - RemainingTime;
 		}
-		return m_endTime - m_pauseTime;
+	}
+
+	public double RemainingTime
+	{
+		get
+		{
+			if (m_running)
+			{
+				return m_endTime - Time.time;
+			}
+			else
+			{
+				return m_endTime - m_pauseTime;
+			}
+		}
+	}
+
+	public double Percentage
+	{
+		get { return ElapsedTime / m_duration; }
 	}
 }
