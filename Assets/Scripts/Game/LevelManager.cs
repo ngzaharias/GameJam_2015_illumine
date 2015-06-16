@@ -121,7 +121,6 @@ public class LevelManager : MonoBehaviour
 
 	public void StartLevel(LevelData data)
 	{
-		UIStateManager.Instance.SetState("GAME_MENU");
 		SpawnModel(data.model, Utility.RandomQuaternion(), 1.0f);
 		CurrentLevel = data;
 	}

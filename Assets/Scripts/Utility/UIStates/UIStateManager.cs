@@ -18,9 +18,7 @@ public class UIStateManager : MonoBehaviour
 	private string m_nextStateKey = null;
 
 	private List<UIState> m_stateStack = new List<UIState>();
-	private List<UIState> m_popStack = new List<UIState>();
-	//private List<UIState> m_toggleStack = new List<UIState>();
-
+	private List<UIState> m_statePopStack = new List<UIState>();
 	private Dictionary<string, UIState> m_statesDictionary = new Dictionary<string, UIState>();
 
 	public UIState CurrentState
@@ -94,18 +92,22 @@ public class UIStateManager : MonoBehaviour
 			UIState state = m_stateStack[m_stateStack.Count - 1];
 			state.Disable();
 			m_stateStack.Remove(state);
-			m_popStack.Add(state);
+			m_statePopStack.Add(state);
 		}
 	}
 
 	public void PopState_Finished(UIState state)
 	{
-		if (m_popStack.Count > 0)
+		if (m_nextStateKey != null)
 		{
-			m_popStack.Remove(state);
-			if (m_popStack.Count == 0)
+			if (m_statePopStack.Count > 0)
 			{
-				PushState(m_nextStateKey);
+				m_statePopStack.Remove(state);
+				if (m_statePopStack.Count == 0)
+				{
+					PushState(m_nextStateKey);
+					m_nextStateKey = null;
+				}
 			}
 		}
 	}
@@ -114,32 +116,37 @@ public class UIStateManager : MonoBehaviour
 	{
 		if (m_statesDictionary.ContainsKey(key))
 		{
-			for (int i = m_stateStack.Count - 1; i >= 0; --i)
+			if (m_stateStack.Count > 0)
 			{
-				PopState();
+				for (int i = m_stateStack.Count - 1; i >= 0; --i)
+				{
+					PopState();
+				}
+				m_nextStateKey = key;
 			}
-			m_nextStateKey = key;
+			else
+			{
+				PushState(key);
+			}
 		}
 	}
 
 	//public void ToggleState(string key)
 	//{
 	//	UIState state = m_statesDictionary[key];
-	//	int index = m_toggleStack.IndexOf(state);
+	//	int index = m_stateStack.IndexOf(state);
 
 	//	// not recorded, push it on and record it
 	//	if (index == -1)
 	//	{
-	//		m_toggleStack.Add(state);
-	//		m_nextStateKey = key;
+	//		PushState(key);
 	//	}
 	//	//	already recorded, pop everything above and including the state
 	//	else
 	//	{
-	//		int count = m_stateStack.Count-1 - index;
+	//		int count = m_stateStack.Count - index;
 	//		for (int i = 0; i < count; ++i)
 	//		{
-	//			m_toggleStack.Remove(state);
 	//			PopState();
 	//		}
 	//	}

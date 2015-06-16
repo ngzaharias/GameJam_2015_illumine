@@ -4,6 +4,9 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class TutorialUIState : UIState
 {
+	[SerializeField]
+	private LevelData m_levelData = null;
+
 	private int m_state = 0;
 	private Timer m_timer = null;
 
@@ -32,6 +35,7 @@ public class TutorialUIState : UIState
 	public override void Enable()
 	{
 		base.Enable();
+		LevelManager.Instance.StartLevel(m_levelData);
 	}
 
 	public override void Disable()

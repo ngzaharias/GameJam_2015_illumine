@@ -9,5 +9,6 @@ public class Level : MonoBehaviour
 	public void StartLevel()
 	{
 		LevelManager.Instance.StartLevel(m_data);
+		UIStateManager.Instance.SetState("GAME_MENU");
 	}
 }

@@ -5,7 +5,7 @@ using System.Collections;
 public class FadeLight : MonoBehaviour 
 {
 	private float m_start = 0.0f;
-	private float m_end = 1.0f;
+	private float m_end = 0.0f;
 	private Light m_light = null;
 	private Timer m_fadeTimer = null;
 	private Timer m_delayTimer = null;
