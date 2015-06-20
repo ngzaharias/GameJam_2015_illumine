@@ -65,7 +65,7 @@ public class TutorialUIState : UIState
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			m_state = 3;
+			m_state = 4;
 			m_timer.Reset();
 		}
 	}

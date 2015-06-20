@@ -35,7 +35,7 @@ public class LightSpawner : MonoBehaviour
 			if (lights[0] != null)
 			{
 				lights[0].Fade(0.0f, 1.0f);
-				Destroy(lights[0], 1.0f);
+				Destroy(lights[0].gameObject, 1.0f);
 			}
 			lights.RemoveAt(0);
 		}
