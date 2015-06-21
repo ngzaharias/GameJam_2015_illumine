@@ -34,6 +34,6 @@ public class GameParametersAsset : Editor
     [MenuItem("Assets/Game Parameters")]
     public static void SelectAsset()
     {
-        Selection.activeObject = Resources.LoadAssetAtPath("Assets/Resources/GameParameters.asset", typeof(ScriptableObject));
+        Selection.activeObject = AssetDatabase.LoadAssetAtPath("Assets/Resources/GameParameters.asset", typeof(ScriptableObject));
     }
 }

@@ -3,23 +3,25 @@ using System.Collections;
 
 public class StickToObject : MonoBehaviour 
 {
-    new private Collider collider = null;
-    new private Rigidbody rigidbody = null;
+    private Collider m_collider = null;
+    private Rigidbody m_rigidbody = null;
 
     void Start()
     {
-        collider = GetComponent<Collider>();
-        rigidbody = GetComponent<Rigidbody>();
+        m_collider = GetComponent<Collider>();
+        m_rigidbody = GetComponent<Rigidbody>();
     }
 
 	void OnCollisionEnter(Collision collision)
     {
         transform.parent = collision.transform;
 
-        if (rigidbody != null)
-            Destroy(rigidbody);
+        if (m_rigidbody != null)
+		{
+            Destroy(m_rigidbody);
+		}
 
-        Destroy(collider);
+        Destroy(m_collider);
         Destroy(this);
     }
 }

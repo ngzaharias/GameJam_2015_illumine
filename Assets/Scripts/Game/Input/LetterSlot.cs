@@ -7,8 +7,6 @@ public class LetterSlot : MonoBehaviour
 	private Letter m_letter = null;
 	public Letter Letter { get { return m_letter; } set { m_letter = value; } }
 
-	static private bool s_isMouseInside = false;
-	public bool IsMouseInside { set { s_isMouseInside = value; } }
 	static private LetterSlot s_other = null;
 
 	void Awake()
@@ -27,14 +25,6 @@ public class LetterSlot : MonoBehaviour
 			SwapLetters();
 			s_other = null;
 			EventSystem.current.SetSelectedGameObject(null);
-		}
-	}
-
-	public void DeselectSlot()
-	{
-		if (s_isMouseInside == false)
-		{
-			s_other = null;
 		}
 	}
 

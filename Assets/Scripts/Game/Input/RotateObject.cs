@@ -1,44 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
-public class RotateObject : MonoBehaviour
+public class RotateObject : MonoBehaviour, IDragHandler
 {
-	void Update()
+	public void OnDrag(PointerEventData eventData)
 	{
-#if UNITY_STANDALONE
-		RotateAxis(MouseDelta());
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WINRT
-
-#endif
-	}
-
-	Vector3 MouseDelta()
-	{
-		Vector3 delta = Vector3.zero;
-		if (Input.GetMouseButton(0))
-		{
-			delta = new Vector3(Input.GetAxis("Mouse Y"), -Input.GetAxis("Mouse X"), 0);
-		}
-		if (Input.GetMouseButton(1))
-		{
-			Vector2 position = Camera.main.WorldToScreenPoint(transform.position);
-
-			float x = Input.GetAxis("Mouse X");
-			float y = Input.GetAxis("Mouse Y");
-
-			x = (Input.mousePosition.y > position.y) ? x : -x;
-			y = (Input.mousePosition.x > position.x) ? y : -y;
-
-			delta = new Vector3(0, 0, y - x);
-		}
-		return delta;
-	}
-
-	Vector3 TouchDelta()
-	{
-		Vector3 delta = Vector3.zero;
-
-		return delta;
+		RotateAxis(new Vector3(eventData.delta.y, -eventData.delta.x, 0));
 	}
 
 	void RotateAxis(Vector3 delta)

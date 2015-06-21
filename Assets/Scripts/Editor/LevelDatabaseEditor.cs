@@ -19,7 +19,7 @@ public class LevelDatabaseEditor : EditorWindow
 	static void ShowWindow()
     {
 		window = (LevelDatabaseEditor)EditorWindow.GetWindow(typeof(LevelDatabaseEditor), true, "Level Database");
-		target = (LevelDatabase)Resources.LoadAssetAtPath("Assets/Resources/LevelDatabase.asset", typeof(ScriptableObject));
+		target = (LevelDatabase)AssetDatabase.LoadAssetAtPath("Assets/Resources/LevelDatabase.asset", typeof(ScriptableObject));
 
 		window.minSize = new Vector2(512, 256);
 	}

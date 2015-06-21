@@ -18,10 +18,8 @@ public class TutorialUIState : UIState
 		m_timer = new Timer();
 	}
 
-	protected override void Update()
+	void Update()
 	{
-		base.Update();
-
 		switch (m_state)
 		{
 			case  0: State0(); break;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PackUIState : UIState
+public class SectionUIState : UIState
 {
 	protected override void Awake()
 	{
@@ -11,11 +11,6 @@ public class PackUIState : UIState
 	protected override void Start()
 	{
 		base.Start();
-	}
-
-	protected override void Update()
-	{
-		base.Update();
 	}
 
 	public override void Enable()

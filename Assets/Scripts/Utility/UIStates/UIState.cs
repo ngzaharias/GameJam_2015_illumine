@@ -26,11 +26,6 @@ public class UIState : MonoBehaviour
 		this.gameObject.SetActive(false);
 	}
 
-	protected virtual void Update()
-	{
-
-	}
-
 	public virtual void Enable()
 	{
 		m_enabled = true;
@@ -46,6 +41,5 @@ public class UIState : MonoBehaviour
 	public virtual void DisableFinished()
 	{
 		UIStateManager.Instance.PopState_Finished(this);
-		this.gameObject.SetActive(false);
 	}
 }

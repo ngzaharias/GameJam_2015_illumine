@@ -98,16 +98,17 @@ public class UIStateManager : MonoBehaviour
 
 	public void PopState_Finished(UIState state)
 	{
-		if (m_nextStateKey != null)
+		if (m_statePopStack.Count > 0)
 		{
-			if (m_statePopStack.Count > 0)
+			if (m_statePopStack.Remove(state))
 			{
-				m_statePopStack.Remove(state);
-				if (m_statePopStack.Count == 0)
-				{
-					PushState(m_nextStateKey);
-					m_nextStateKey = null;
-				}
+				state.gameObject.SetActive(false);
+			}
+
+			if (m_statePopStack.Count == 0 && m_nextStateKey != null)
+			{
+				PushState(m_nextStateKey);
+				m_nextStateKey = null;
 			}
 		}
 	}
