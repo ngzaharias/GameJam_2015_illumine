@@ -16,7 +16,6 @@ public class LevelManager : MonoBehaviour
 	private GameObject m_model = null;
 	private Quaternion m_modelRotation = Quaternion.identity;
 	private Timer m_modelSpawnDelay = null;
-	private Timer m_modelDestroyDelay = null;
 
 	[SerializeField]
 	private Section[] m_sections;
@@ -44,12 +43,6 @@ public class LevelManager : MonoBehaviour
 			SpawnModel(m_model, m_modelRotation);
 			m_modelSpawnDelay = null;
 		}
-
-		if (m_modelDestroyDelay != null && m_modelDestroyDelay.Finished())
-		{
-			DestroyModel();
-			m_modelDestroyDelay = null;
-		}
 	}
 
 	public void SpawnModel(GameObject model, Quaternion rotation, float delay = 0.0f)
@@ -75,15 +68,7 @@ public class LevelManager : MonoBehaviour
 	{
 		if (m_model != null)
 		{
-			if (delay > 0.0f)
-			{
-				m_modelDestroyDelay = new Timer();
-				m_modelDestroyDelay.Start(delay);
-			}
-			else
-			{
-				Destroy(m_model);
-			}
+			Destroy(m_model, delay);
 		}
 	}
 
@@ -134,13 +119,14 @@ public class LevelManager : MonoBehaviour
 		}
 		else
 		{
-			ExitLevel();
+			ExitLevel("LEVEL_MENU");
 		}
 	}
 
-	public void ExitLevel()
+	public void ExitLevel(string key)
 	{
-		UIStateManager.Instance.SetState("LEVEL_MENU");
-		DestroyModel(1.0f);
+		UIStateManager.Instance.SetState(key);
+		LightManager.Instance.FadePointLights(0.0f, 1.0f);
+		DestroyModel(1.1f);
 	}
 }
