@@ -4,18 +4,12 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class TutorialUIState : UIState
 {
-	[SerializeField]
-	private LevelData m_levelData = null;
-
 	private int m_state = 0;
-	private Timer m_timer = null;
-
 	private Vector2 m_dragStartPos = Vector2.zero;
 
 	protected override void Start()
 	{
 		base.Start();
-		m_timer = new Timer();
 	}
 
 	void Update()
@@ -33,7 +27,7 @@ public class TutorialUIState : UIState
 	public override void Enable()
 	{
 		base.Enable();
-		LevelManager.Instance.StartLevel(m_levelData);
+		UIStateManager.Instance.PushState("GAME_MENU");
 	}
 
 	public override void Disable()
@@ -46,7 +40,6 @@ public class TutorialUIState : UIState
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			m_state = 1;
-			m_timer.Start(GameParameters.Instance.m_TutorialStateTime);
 		}
 	}
 
@@ -64,7 +57,6 @@ public class TutorialUIState : UIState
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			m_state = 4;
-			m_timer.Reset();
 		}
 	}
 

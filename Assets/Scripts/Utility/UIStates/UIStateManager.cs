@@ -21,18 +21,6 @@ public class UIStateManager : MonoBehaviour
 	private List<UIState> m_statePopStack = new List<UIState>();
 	private Dictionary<string, UIState> m_statesDictionary = new Dictionary<string, UIState>();
 
-	public UIState CurrentState
-	{
-		get
-		{
-			if (m_stateStack.Count > 0)
-			{
-				return m_stateStack[m_stateStack.Count - 1];
-			}
-			return null;
-		}
-	}
-
 	void Awake()
 	{
 		m_instance = this;
@@ -68,6 +56,25 @@ public class UIStateManager : MonoBehaviour
 		{
 			PopState();
 			m_nextStateKey = key;
+		}
+	}
+
+	public void SetState(string key)
+	{
+		if (m_statesDictionary.ContainsKey(key))
+		{
+			if (m_stateStack.Count > 0)
+			{
+				for (int i = m_stateStack.Count - 1; i >= 0; --i)
+				{
+					PopState();
+				}
+				m_nextStateKey = key;
+			}
+			else
+			{
+				PushState(key);
+			}
 		}
 	}
 
@@ -109,25 +116,6 @@ public class UIStateManager : MonoBehaviour
 			{
 				PushState(m_nextStateKey);
 				m_nextStateKey = null;
-			}
-		}
-	}
-
-	public void SetState(string key)
-	{
-		if (m_statesDictionary.ContainsKey(key))
-		{
-			if (m_stateStack.Count > 0)
-			{
-				for (int i = m_stateStack.Count - 1; i >= 0; --i)
-				{
-					PopState();
-				}
-				m_nextStateKey = key;
-			}
-			else
-			{
-				PushState(key);
 			}
 		}
 	}

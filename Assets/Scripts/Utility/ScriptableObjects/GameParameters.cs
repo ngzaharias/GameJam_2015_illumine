@@ -28,7 +28,7 @@ public class GameParameters : ScriptableObject
         }
     }
 
-    public string m_GameName = "";
+    public string m_GameName = "illume";
     public string m_Version = "alpha.1";
 
 	public bool m_connectSections = false;
@@ -41,6 +41,5 @@ public class GameParameters : ScriptableObject
 	public uint m_RotateZTouchCount = 2;
 	public float m_RotateObjectSpeed = 500.0f;
 
-	public float m_TutorialStateTime = 5.0f;
 	public float m_TutorialDragDistance = 100.0f;
 }

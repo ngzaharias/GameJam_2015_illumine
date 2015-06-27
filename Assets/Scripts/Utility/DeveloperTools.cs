@@ -3,26 +3,34 @@ using System.Collections;
 
 public class DeveloperTools : MonoBehaviour 
 {
+	[SerializeField]
+	public bool m_timeScale = true;
+	[SerializeField]
+	public float m_speedSlow = 0.25f;
+	[SerializeField]
+	public float m_speedFast = 4.0f;
 
-	void Awake()
-	{
-	
-	}
-
-	void Start () 
-	{
-	
-	}
-	
 	void Update ()
 	{
-		if (Input.GetKeyDown(KeyCode.KeypadMinus))
+		TimeScale();
+	}
+
+	void TimeScale()
+	{
+		if (m_timeScale)
 		{
-			Time.timeScale = Time.timeScale * 0.5f;
-		}
-		if (Input.GetKeyDown(KeyCode.KeypadPlus))
-		{
-			Time.timeScale = Time.timeScale * 2.0f;
+			if (Input.GetKey(KeyCode.KeypadMinus))
+			{
+				Time.timeScale = m_speedSlow;
+			}
+			else if (Input.GetKey(KeyCode.KeypadPlus))
+			{
+				Time.timeScale = m_speedFast;
+			}
+			else
+			{
+				Time.timeScale = 1.0f;
+			}
 		}
 	}
 }
