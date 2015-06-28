@@ -26,13 +26,11 @@ public class UIState : MonoBehaviour
 
 	public virtual void Enable()
 	{
-		//m_animator.SetBool("Enabled", true);
 		m_animator.SetTrigger("Enable");
 	}
 
 	public virtual void Disable()
 	{
-		//m_animator.SetBool("Enabled", false);
 		m_animator.SetTrigger("Disable");
 	}
 

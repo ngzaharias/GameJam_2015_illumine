@@ -12,11 +12,9 @@ public class Letter : MonoBehaviour
 		m_text = GetComponent<Text>();
 	}
 
-	void Update () 
+	public void SetLetter(char letter)
 	{
-		if (m_text.text.Length > 1)
-		{
-			m_text.text = m_text.text[0].ToString();
-		}
+		letter = char.ToUpper(letter);
+		m_text.text = letter.ToString();
 	}
 }

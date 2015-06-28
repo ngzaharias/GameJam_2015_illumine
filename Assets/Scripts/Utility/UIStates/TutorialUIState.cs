@@ -16,12 +16,11 @@ public class TutorialUIState : UIState
 	{
 		switch (m_state)
 		{
-			case  0: State0(); break;
-			case  1: State1(); break;
-			case  2: State2(); break;
-			case  3: State3(); break;
+			case 0: State0(); break;
+			case 1: State1(); break;
+			case 2: State2(); break;
+			case 3: State3(); break;
 		}
-		m_animator.SetInteger("State", m_state);
 	}
 
 	public override void Enable()
@@ -35,38 +34,46 @@ public class TutorialUIState : UIState
 		base.Disable();
 	}
 
-	void State0()
+	private void State0()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			m_state = 1;
+			NextState();
 		}
 	}
 
-	void State1()
+	private void State1()
 	{
 		float dragDistance = CalculateMouseDragDistance(0);
 		if (dragDistance >= GameParameters.Instance.m_TutorialDragDistance)
 		{
-			m_state = 2;
+			NextState();
 		}
 	}
 
-	void State2()
+	private void State2()
 	{
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			m_state = 4;
+			NextState();
+			NextState();
 		}
 	}
 
-	void State3()
+	private void State3()
 	{
 		float dragDistance = CalculateMouseDragDistance(1);
 		if (dragDistance >= GameParameters.Instance.m_TutorialDragDistance)
 		{
-			m_state = 4;
+			NextState();
 		}
+	}
+
+	private void NextState()
+	{
+		++m_state;
+		m_animator.SetInteger("State", m_state);
+		m_animator.SetTrigger("NextState");
 	}
 
 	private float CalculateMouseDragDistance(int mouseButton)
