@@ -22,16 +22,16 @@ public class LetterSlot : MonoBehaviour
 		}
 		else if (s_other != this)
 		{
-			SwapLetters();
+			SwapLetters(s_other);
 			s_other = null;
 			EventSystem.current.SetSelectedGameObject(null);
 		}
 	}
 
-	private void SwapLetters()
+	public void SwapLetters(LetterSlot slot)
 	{
 		Letter temp = m_letter;
-		m_letter = s_other.Letter;
+		m_letter = slot.Letter;
 		if (m_letter != null)
 		{
 			m_letter.transform.SetParent(transform);
@@ -40,13 +40,23 @@ public class LetterSlot : MonoBehaviour
 			rt.sizeDelta = Vector2.zero;
 		}
 
-		s_other.Letter = temp;
-		if (s_other.Letter != null)
+		slot.Letter = temp;
+		if (slot.Letter != null)
 		{
-			s_other.Letter.transform.SetParent(s_other.transform);
-			RectTransform rt = s_other.Letter.transform as RectTransform;
+			slot.Letter.transform.SetParent(slot.transform);
+			RectTransform rt = slot.Letter.transform as RectTransform;
 			rt.anchoredPosition = Vector2.zero;
 			rt.sizeDelta = Vector2.zero;
 		}
+	}
+
+	public void AssignToAnswer()
+	{
+		LevelManager.Instance.AssignToAnswer(this);
+	}
+
+	public void AssignToLetters()
+	{
+		LevelManager.Instance.AssignToLetters(this);
 	}
 }

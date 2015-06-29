@@ -29,11 +29,15 @@ public class LevelManager : MonoBehaviour
 	private LetterSlot m_letterSlot = null;
 
 	[SerializeField]
-	private RectTransform m_inputAnswer = null;
-	private bool m_toggleAnswer = false;
+	private RectTransform m_answerParent = null;
+	private List<LetterSlot> m_answerSlots = new List<LetterSlot>();
+	private bool m_answerToggle = false;
+
 	[SerializeField]
-	private RectTransform m_inputLetters = null;
-	private bool m_toggleLetters = false;
+	private RectTransform m_lettersParent = null;
+	private List<LetterSlot> m_lettersSlots = new List<LetterSlot>();
+	private bool m_lettersToggle = false;
+
 
 	private LevelData m_currentLevel;
 	public LevelData CurrentLevel { get { return m_currentLevel; } set { m_currentLevel = value; } }
@@ -120,32 +124,27 @@ public class LevelManager : MonoBehaviour
 
 	public void SetupAnswer(LevelData data)
 	{
-		LetterSlot[] items = m_inputAnswer.GetComponentsInChildren<LetterSlot>(true);
-		for (int i = 0; i < items.Length; ++i)
+		for (int i = 0; i < m_answerSlots.Count; ++i)
 		{
-			if (items[i].gameObject != m_inputAnswer.gameObject)
-			{
-				Destroy(items[i].gameObject);
-			}
+			Destroy(m_answerSlots[i].gameObject);
 		}
 
 		for (int i = 0; i < data.answer.Length; ++i)
 		{
 			LetterSlot slot = Instantiate<LetterSlot>(m_letterSlot);
-			slot.transform.SetParent(m_inputAnswer, false);
+			slot.transform.SetParent(m_answerParent, false);
+			UnityEngine.Events.UnityAction action1 = () => { slot.AssignToLetters(); };
+			slot.GetComponent<Button>().onClick.AddListener(action1);
+			m_answerSlots.Add(slot);
 		}
 	}
 
 	public void SetupLetters(LevelData data)
 	{
 		// clear letterSlots
-		LetterSlot[] slots = m_inputLetters.GetComponentsInChildren<LetterSlot>(true);
-		for (int i = 0; i < slots.Length; ++i)
+		for (int i = 0; i < m_lettersSlots.Count; ++i)
 		{
-			if (slots[i].gameObject != m_inputAnswer.gameObject)
-			{
-				Destroy(slots[i].gameObject);
-			}
+			Destroy(m_lettersSlots[i].gameObject);
 		}
 
 		//	add legitimate letters
@@ -168,7 +167,10 @@ public class LevelManager : MonoBehaviour
 		for (int i = 0; i < count + subCount; ++i)
 		{
 			LetterSlot slot = Instantiate<LetterSlot>(m_letterSlot);
-			slot.transform.SetParent(m_inputLetters, false);
+			slot.transform.SetParent(m_lettersParent, false);
+			UnityEngine.Events.UnityAction action1 = () => { slot.AssignToAnswer(); };
+			slot.GetComponent<Button>().onClick.AddListener(action1);
+			m_lettersSlots.Add(slot);
 
 			Letter letter = Instantiate<Letter>(m_letter);
 			letter.transform.SetParent(slot.transform, false);
@@ -204,23 +206,44 @@ public class LevelManager : MonoBehaviour
 
 	public void ExitLevel(string key)
 	{
-		if (m_toggleAnswer) ToggleAnswer();
-		if (m_toggleLetters) ToggleLetters();
+		if (m_answerToggle) ToggleAnswer();
+		if (m_lettersToggle) ToggleLetters();
 
 		UIStateManager.Instance.SetState(key);
 		LightManager.Instance.FadePointLights(0.0f, 0.5f);
 		DestroyModel(0.6f);
 	}
 
+	public void AssignToAnswer(LetterSlot slot)
+	{
+		if (slot.Letter == null) return;
+
+		//	search through for an empty space OR
+		//	switch with the last item
+		for (int i = 0; i < m_answerSlots.Count; ++i)
+		{
+			if (m_answerSlots[i].Letter == null || 
+				i == m_answerSlots.Count - 1)
+			{
+				slot.SwapLetters(m_answerSlots[i]);
+			}
+		}
+	}
+
+	public void AssignToLetters(LetterSlot slot)
+	{
+
+	}
+
 	public void ToggleAnswer()
 	{
-		m_toggleAnswer = !m_toggleAnswer;
-		m_inputAnswer.GetComponent<Animator>().SetBool("Toggle", m_toggleAnswer);
+		m_answerToggle = !m_answerToggle;
+		m_answerParent.GetComponent<Animator>().SetBool("Toggle", m_answerToggle);
 	}
 
 	public void ToggleLetters()
 	{
-		m_toggleLetters = !m_toggleLetters;
-		m_inputLetters.GetComponent<Animator>().SetBool("Toggle", m_toggleLetters);
+		m_lettersToggle = !m_lettersToggle;
+		m_lettersParent.GetComponent<Animator>().SetBool("Toggle", m_lettersToggle);
 	}
 }
