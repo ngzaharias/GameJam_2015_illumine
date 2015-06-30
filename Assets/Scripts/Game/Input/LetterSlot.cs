@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(Button))]
 public class LetterSlot : MonoBehaviour 
 {
 	private Letter m_letter = null;

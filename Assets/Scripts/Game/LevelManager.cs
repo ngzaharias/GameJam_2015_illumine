@@ -133,8 +133,7 @@ public class LevelManager : MonoBehaviour
 		{
 			LetterSlot slot = Instantiate<LetterSlot>(m_letterSlot);
 			slot.transform.SetParent(m_answerParent, false);
-			UnityEngine.Events.UnityAction action1 = () => { slot.AssignToLetters(); };
-			slot.GetComponent<Button>().onClick.AddListener(action1);
+			slot.GetComponent<Button>().onClick.AddListener(slot.AssignToLetters);
 			m_answerSlots.Add(slot);
 		}
 	}
@@ -168,8 +167,7 @@ public class LevelManager : MonoBehaviour
 		{
 			LetterSlot slot = Instantiate<LetterSlot>(m_letterSlot);
 			slot.transform.SetParent(m_lettersParent, false);
-			UnityEngine.Events.UnityAction action1 = () => { slot.AssignToAnswer(); };
-			slot.GetComponent<Button>().onClick.AddListener(action1);
+			slot.GetComponent<Button>().onClick.AddListener(slot.AssignToAnswer);
 			m_lettersSlots.Add(slot);
 
 			Letter letter = Instantiate<Letter>(m_letter);
@@ -232,7 +230,19 @@ public class LevelManager : MonoBehaviour
 
 	public void AssignToLetters(LetterSlot slot)
 	{
+		if (slot.Letter == null) return;
 
+		//	search through for an empty space OR
+		//	switch with the last item
+		for (int i = 0; i < m_lettersSlots.Count; ++i)
+		{
+			if (m_lettersSlots[i].Letter == null ||
+				i == m_lettersSlots.Count - 1)
+			{
+				slot.SwapLetters(m_lettersSlots[i]);
+				return;
+			}
+		}
 	}
 
 	public void ToggleAnswer()
