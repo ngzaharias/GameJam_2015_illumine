@@ -51,13 +51,28 @@ public class LetterSlot : MonoBehaviour
 		}
 	}
 
-	public void AssignToAnswer()
+	public void SwapLettersWithAnswerSlot()
 	{
-		LevelManager.Instance.AssignToAnswer(this);
+		LetterSlot slot = LetterSlotManager.Instance.GetAnswerSlot();
+		if (slot != null)
+		{
+			SwapLetters(slot);
+		}
+
+		string slotAnswer = LetterSlotManager.Instance.GetAnswer();
+		string levelAnswer = LevelManager.Instance.CurrentLevel.answer;
+		if (slotAnswer.ToLower() == levelAnswer.ToLower())
+		{
+			LevelManager.Instance.CompleteLevel();
+		}
 	}
 
-	public void AssignToLetters()
+	public void SwapLettersWithLetterSlot()
 	{
-		LevelManager.Instance.AssignToLetters(this);
+		LetterSlot slot = LetterSlotManager.Instance.GetLetterSlot();
+		if (slot != null)
+		{
+			SwapLetters(slot);
+		}
 	}
 }

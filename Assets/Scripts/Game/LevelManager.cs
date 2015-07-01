@@ -23,22 +23,6 @@ public class LevelManager : MonoBehaviour
 	[SerializeField]
 	private Level[] m_levels;
 
-	[SerializeField]
-	private Letter m_letter = null;
-	[SerializeField]
-	private LetterSlot m_letterSlot = null;
-
-	[SerializeField]
-	private RectTransform m_answerParent = null;
-	private List<LetterSlot> m_answerSlots = new List<LetterSlot>();
-	private bool m_answerToggle = false;
-
-	[SerializeField]
-	private RectTransform m_lettersParent = null;
-	private List<LetterSlot> m_lettersSlots = new List<LetterSlot>();
-	private bool m_lettersToggle = false;
-
-
 	private LevelData m_currentLevel;
 	public LevelData CurrentLevel { get { return m_currentLevel; } set { m_currentLevel = value; } }
 
@@ -114,6 +98,10 @@ public class LevelManager : MonoBehaviour
 			{
 				m_levels[i].gameObject.SetActive(true);
 				m_levels[i].Data = levels[i];
+				if (i > 0)
+				{
+					m_levels[i-1].Data.next = m_levels[i].Data;
+				}
 			}
 			else
 			{
@@ -122,138 +110,47 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	public void SetupAnswer(LevelData data)
-	{
-		for (int i = 0; i < m_answerSlots.Count; ++i)
-		{
-			Destroy(m_answerSlots[i].gameObject);
-		}
-
-		for (int i = 0; i < data.answer.Length; ++i)
-		{
-			LetterSlot slot = Instantiate<LetterSlot>(m_letterSlot);
-			slot.transform.SetParent(m_answerParent, false);
-			slot.GetComponent<Button>().onClick.AddListener(slot.AssignToLetters);
-			m_answerSlots.Add(slot);
-		}
-	}
-
-	public void SetupLetters(LevelData data)
-	{
-		// clear letterSlots
-		for (int i = 0; i < m_lettersSlots.Count; ++i)
-		{
-			Destroy(m_lettersSlots[i].gameObject);
-		}
-
-		//	add legitimate letters
-		int count = data.answer.Length;
-		List<char> letters = new List<char>();
-		for (int i = 0; i < count; ++i)
-		{
-			letters.Add(data.answer[i]);
-		}
-
-		//	add random letters
-		int subCount = (count / 3) + 1;
-		for (int i = 0; i < subCount; ++i)
-		{
-			int rand = Random.Range(0, 26);
-			letters.Add((char)(65 + rand));
-		}
-
-		//	spawn the letters
-		for (int i = 0; i < count + subCount; ++i)
-		{
-			LetterSlot slot = Instantiate<LetterSlot>(m_letterSlot);
-			slot.transform.SetParent(m_lettersParent, false);
-			slot.GetComponent<Button>().onClick.AddListener(slot.AssignToAnswer);
-			m_lettersSlots.Add(slot);
-
-			Letter letter = Instantiate<Letter>(m_letter);
-			letter.transform.SetParent(slot.transform, false);
-
-			slot.Letter = letter;
-
-			int rand = Random.Range(0, letters.Count);
-			letter.SetLetter(letters[rand]);
-			letters.RemoveAt(rand);
-		}
-	}
-
 	public void StartLevel(LevelData data)
 	{
+		LightManager.Instance.FadeDirectionalLight(0.0f, 0.5f);
+		LightManager.Instance.FadePointLights(0.0f, 0.5f);
+		
 		SpawnModel(data.model, Utility.RandomQuaternion(), 1.0f);
 		CurrentLevel = data;
-		SetupAnswer(data);
-		SetupLetters(data);
+
+		LetterSlotManager.Instance.SetupSlots(data);
+	}
+
+	public void CompleteLevel()
+	{
+		LightManager.Instance.FadePointLights(0.0f, 0.5f);
+		LightManager.Instance.FadeDirectionalLight(1.0f, 0.5f);
+
+		LetterSlotManager.Instance.ToggleSlots(false);
+		UIStateManager.Instance.PushState("LEVEL_END_MENU");
 	}
 
 	public void NextLevel()
 	{
 		if (m_currentLevel.next != null)
 		{
+			UIStateManager.Instance.SetState("GAME_MENU");
 			DestroyModel(1.0f);
 			StartLevel(m_currentLevel.next);
 		}
 		else
 		{
-			ExitLevel("LEVEL_MENU");
+			ExitLevel("SECTION_MENU");
 		}
 	}
 
 	public void ExitLevel(string key)
 	{
-		if (m_answerToggle) ToggleAnswer();
-		if (m_lettersToggle) ToggleLetters();
+		LightManager.Instance.FadePointLights(0.0f, 0.3f);
+		LightManager.Instance.FadeDirectionalLight(0.0f, 0.3f);
+		DestroyModel(0.5f);
 
+		LetterSlotManager.Instance.ToggleSlots(false);
 		UIStateManager.Instance.SetState(key);
-		LightManager.Instance.FadePointLights(0.0f, 0.5f);
-		DestroyModel(0.6f);
-	}
-
-	public void AssignToAnswer(LetterSlot slot)
-	{
-		if (slot.Letter == null) return;
-
-		//	search through for an empty space OR
-		//	switch with the last item
-		for (int i = 0; i < m_answerSlots.Count; ++i)
-		{
-			if (m_answerSlots[i].Letter == null || 
-				i == m_answerSlots.Count - 1)
-			{
-				slot.SwapLetters(m_answerSlots[i]);
-			}
-		}
-	}
-
-	public void AssignToLetters(LetterSlot slot)
-	{
-		if (slot.Letter == null) return;
-
-		//	search through for an empty space OR
-		//	switch with the last item
-		for (int i = 0; i < m_lettersSlots.Count; ++i)
-		{
-			if (m_lettersSlots[i].Letter == null ||
-				i == m_lettersSlots.Count - 1)
-			{
-				slot.SwapLetters(m_lettersSlots[i]);
-				return;
-			}
-		}
-	}
-
-	public void ToggleAnswer()
-	{
-		m_answerToggle = !m_answerToggle;
-		m_answerParent.GetComponent<Animator>().SetBool("Toggle", m_answerToggle);
-	}
-
-	public void ToggleLetters()
-	{
-		m_lettersToggle = !m_lettersToggle;
-		m_lettersParent.GetComponent<Animator>().SetBool("Toggle", m_lettersToggle);
 	}
 }

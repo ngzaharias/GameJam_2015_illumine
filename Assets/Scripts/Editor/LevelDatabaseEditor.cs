@@ -131,7 +131,7 @@ public class LevelDatabaseEditor : EditorWindow
 
 		EditorGUILayout.BeginHorizontal();
 		GUILayout.Label("Model: ");
-		GUILayoutOption[] options = { GUILayout.MinWidth(128) };//, GUILayout.MinHeight(32) };
+		GUILayoutOption[] options = { GUILayout.MinWidth(128) };
 		level.model = (GameObject)EditorGUILayout.ObjectField(level.model, typeof(GameObject), false, options);
 		EditorGUILayout.EndHorizontal();
 

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Letter : MonoBehaviour 
 {
 	private Text m_text = null;
+	public string Text { get { return m_text.text; } }
 
 	void Awake()
 	{
