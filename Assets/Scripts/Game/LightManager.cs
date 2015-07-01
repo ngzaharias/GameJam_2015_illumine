@@ -14,6 +14,13 @@ public class LightManager : MonoBehaviour
 	}
 
 	[SerializeField]
+	private uint m_pointLightsMax = 3;
+	[SerializeField]
+	private float m_pointForceAmount = 100.0f;
+	[SerializeField]
+	private FadeLight m_pointLightPrefab = null;
+
+	[SerializeField]
 	private FadeLight m_directionalLight = null;
 	private List<FadeLight> m_pointLights = new List<FadeLight>();
 	public List<FadeLight> PointLights { get { return m_pointLights; } }
@@ -50,5 +57,26 @@ public class LightManager : MonoBehaviour
 	public void UnRegisterPointLight(FadeLight light)
 	{
 		m_pointLights.Remove(light);
+	}
+
+	public void SpawnPointLight()
+	{
+		// spawn a light
+		FadeLight light = Instantiate<FadeLight>(m_pointLightPrefab);
+		light.transform.position = Camera.main.transform.position;
+		light.GetComponent<Rigidbody>().AddForce(transform.forward * m_pointForceAmount);
+		light.Fade(4.0f, 1.0f);
+		RegisterPointLight(light);
+
+		// remove a light
+		while (m_pointLights.Count > m_pointLightsMax)
+		{
+			if (m_pointLights[0] != null)
+			{
+				m_pointLights[0].Fade(0.0f, 1.0f);
+				Destroy(m_pointLights[0].gameObject, 1.0f);
+			}
+			m_pointLights.RemoveAt(0);
+		}
 	}
 }
