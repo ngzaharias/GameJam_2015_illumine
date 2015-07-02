@@ -119,6 +119,7 @@ public class LevelManager : MonoBehaviour
 		CurrentLevel = data;
 
 		LetterSlotManager.Instance.SetupSlots(data);
+		LightManager.Instance.SpawningEnabled = true;
 	}
 
 	public void CompleteLevel()
@@ -152,5 +153,6 @@ public class LevelManager : MonoBehaviour
 
 		LetterSlotManager.Instance.ToggleSlots(false);
 		UIStateManager.Instance.SetState(key);
+		LightManager.Instance.SpawningEnabled = false;
 	}
 }

@@ -16,6 +16,11 @@ public class FadeLight : MonoBehaviour
 		m_light = GetComponent<Light>();
 	}
 
+	void OnDestroy()
+	{
+		LightManager.Instance.PointLights.Remove(this);
+	}
+
 	void Update () 
 	{
 		if (m_delayTimer != null)

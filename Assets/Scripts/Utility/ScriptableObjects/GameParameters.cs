@@ -29,13 +29,17 @@ public class GameParameters : ScriptableObject
     }
 
     public string m_GameName = "illume";
-    public string m_Version = "alpha.1";
+    public string m_Version = "alpha.2";
 
 	public bool m_connectSections = false;
 
     public Texture2D[] m_Textures = null;
 
     public UIColours m_UIColours;
+
+	public uint m_SpawnLightsMax = 3;
+	public float m_SpawnLightForce = 500.0f;
+	public FadeLight m_SpawnLightPrefab = null;
 
 	public uint m_RotateXYTouchCount = 1;
 	public uint m_RotateZTouchCount = 2;
