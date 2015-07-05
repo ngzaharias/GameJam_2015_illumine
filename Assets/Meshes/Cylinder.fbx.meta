@@ -1,15 +1,22 @@
 fileFormatVersion: 2
-guid: 8cd35d41f828c4e4f95e07b6dc6a79ce
-timeCreated: 1426772578
+guid: 9e24941303c2c5447a133c001130d460
+timeCreated: 1435988467
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
+    100002: CylinderHigh
+    100004: CylinderLow
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Chair
+    400002: CylinderHigh
+    400004: CylinderLow
+    2300000: CylinderHigh
+    2300002: CylinderLow
+    3300000: CylinderHigh
+    3300002: CylinderLow
+    4300000: CylinderLow
+    4300002: CylinderHigh
   materials:
     importMaterials: 0
     materialName: 0

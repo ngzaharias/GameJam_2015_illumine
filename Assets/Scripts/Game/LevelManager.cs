@@ -112,7 +112,6 @@ public class LevelManager : MonoBehaviour
 
 	public void StartLevel(LevelData data)
 	{
-		LightManager.Instance.FadeDirectionalLight(0.0f, 0.5f);
 		LightManager.Instance.FadePointLights(0.0f, 0.5f);
 		
 		SpawnModel(data.model, Utility.RandomQuaternion(), 1.0f);
@@ -124,9 +123,6 @@ public class LevelManager : MonoBehaviour
 
 	public void CompleteLevel()
 	{
-		LightManager.Instance.FadePointLights(0.0f, 0.5f);
-		LightManager.Instance.FadeDirectionalLight(1.0f, 0.5f);
-
 		LetterSlotManager.Instance.ToggleSlots(false);
 		UIStateManager.Instance.PushState("LEVEL_END_MENU");
 	}
@@ -148,7 +144,6 @@ public class LevelManager : MonoBehaviour
 	public void ExitLevel(string key)
 	{
 		LightManager.Instance.FadePointLights(0.0f, 0.3f);
-		LightManager.Instance.FadeDirectionalLight(0.0f, 0.3f);
 		DestroyModel(0.5f);
 
 		LetterSlotManager.Instance.ToggleSlots(false);

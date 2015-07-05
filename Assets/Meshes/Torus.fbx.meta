@@ -1,15 +1,22 @@
 fileFormatVersion: 2
-guid: 8cd35d41f828c4e4f95e07b6dc6a79ce
-timeCreated: 1426772578
+guid: 89ba37b677678b643ba21577a9961833
+timeCreated: 1435989419
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
+    100002: TorusHigh
+    100004: TorusLow
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Chair
+    400002: TorusHigh
+    400004: TorusLow
+    2300000: TorusHigh
+    2300002: TorusLow
+    3300000: TorusHigh
+    3300002: TorusLow
+    4300000: TorusHigh
+    4300002: TorusLow
   materials:
     importMaterials: 0
     materialName: 0

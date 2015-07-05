@@ -1,15 +1,22 @@
 fileFormatVersion: 2
-guid: 8cd35d41f828c4e4f95e07b6dc6a79ce
-timeCreated: 1426772578
+guid: b01c6c8d2a28ef749b8072bd8c2c6b53
+timeCreated: 1435983945
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
+    100002: CubeHigh
+    100004: CubeLow
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Chair
+    400002: CubeHigh
+    400004: CubeLow
+    2300000: CubeHigh
+    2300002: CubeLow
+    3300000: CubeHigh
+    3300002: CubeLow
+    4300000: CubeLow
+    4300002: CubeHigh
   materials:
     importMaterials: 0
     materialName: 0

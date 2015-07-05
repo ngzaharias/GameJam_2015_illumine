@@ -1,15 +1,22 @@
 fileFormatVersion: 2
-guid: 8cd35d41f828c4e4f95e07b6dc6a79ce
-timeCreated: 1426772578
+guid: db78efb8ca1b2b448913f3cb3e884382
+timeCreated: 1435990302
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
+    100002: ConeHigh
+    100004: ConeLow
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Chair
+    400002: ConeHigh
+    400004: ConeLow
+    2300000: ConeHigh
+    2300002: ConeLow
+    3300000: ConeHigh
+    3300002: ConeLow
+    4300000: ConeHigh
+    4300002: ConeLow
   materials:
     importMaterials: 0
     materialName: 0

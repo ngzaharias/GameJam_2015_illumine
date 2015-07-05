@@ -1,15 +1,22 @@
 fileFormatVersion: 2
-guid: 8cd35d41f828c4e4f95e07b6dc6a79ce
-timeCreated: 1426772578
+guid: 83f6f05afb760dc428cb1432cd5c9330
+timeCreated: 1435987156
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
+    100002: IcosphereHigh
+    100004: IcosphereLow
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Chair
+    400002: IcosphereHigh
+    400004: IcosphereLow
+    2300000: IcosphereHigh
+    2300002: IcosphereLow
+    3300000: IcosphereHigh
+    3300002: IcosphereLow
+    4300000: IcosphereLow
+    4300002: IcosphereHigh
   materials:
     importMaterials: 0
     materialName: 0
