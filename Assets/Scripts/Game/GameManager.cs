@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour
 	{
 		get
 		{
-			if (m_instance == null)
-				m_instance = GameObject.FindObjectOfType<GameManager>();
 			return m_instance;
 		}
 	}

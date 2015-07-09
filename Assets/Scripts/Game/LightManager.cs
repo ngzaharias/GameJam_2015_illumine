@@ -9,8 +9,6 @@ public class LightManager : MonoBehaviour
 	{
 		get
 		{
-			if (m_instance == null)
-				m_instance = GameObject.FindObjectOfType<LightManager>();
 			return m_instance;
 		}
 	}
@@ -75,8 +73,5 @@ public class LightManager : MonoBehaviour
 			}
 			m_pointLights.RemoveAt(0);
 		}
-
-		AudioClip clip = SoundDatabase.Instance.GetSoundEffect(SoundEffect.Type.SOUND_EFFECT_LEVEL_SPAWN_LIGHT);
-		SoundManager.Instance.PlayAudioClip(clip);
 	}
 }

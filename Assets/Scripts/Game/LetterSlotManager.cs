@@ -10,8 +10,6 @@ public class LetterSlotManager : MonoBehaviour {
 	{
 		get
 		{
-			if (m_instance == null)
-				m_instance = GameObject.FindObjectOfType<LetterSlotManager>();
 			return m_instance;
 		}
 	}

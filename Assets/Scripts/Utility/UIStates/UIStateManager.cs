@@ -9,8 +9,6 @@ public class UIStateManager : MonoBehaviour
 	{
 		get
 		{
-			if (m_instance == null)
-				m_instance = GameObject.FindObjectOfType<UIStateManager>();
 			return m_instance;
 		}
 	}
