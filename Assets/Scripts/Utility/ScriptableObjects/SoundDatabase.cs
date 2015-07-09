@@ -1,20 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum SoundEffect
-{
-	SOUND_EFFECT_NONE = -1,
-
-	SOUND_EFFECT_BUTTON_BACK,
-	SOUND_EFFECT_BUTTON_LETTER_SLOT,
-	SOUND_EFFECT_BUTTON_SECTION,
-	SOUND_EFFECT_BUTTON_LEVEL,
-	SOUND_EFFECT_LEVEL_START,
-	SOUND_EFFECT_LEVEL_END,
-
-	SOUND_EFFECT_COUNT
-};
-
 public class SoundDatabase : ScriptableObject 
 {
     private static SoundDatabase m_instance = null;
@@ -30,23 +16,31 @@ public class SoundDatabase : ScriptableObject
         }
     }
 
+	public AudioClip m_buttonSelect = null;
 	public AudioClip m_buttonBack = null;
-	public AudioClip m_buttonLetterSlot= null;
+	public AudioClip m_buttonArrow = null;
 	public AudioClip m_buttonSection = null;
 	public AudioClip m_buttonLevel = null;
+	public AudioClip m_buttonLetterSlot= null;
+
 	public AudioClip m_levelStart = null;
 	public AudioClip m_levelEnd = null;
+	public AudioClip m_levelSpawnLight = null;
 
-	public AudioClip GetSoundEffectFromType(SoundEffect type)
+	public AudioClip GetSoundEffect(SoundEffect.Type type)
 	{
 		switch (type)
 		{
-			case SoundEffect.SOUND_EFFECT_BUTTON_BACK: return m_buttonBack;
-			case SoundEffect.SOUND_EFFECT_BUTTON_LETTER_SLOT: return m_buttonLetterSlot;
-			case SoundEffect.SOUND_EFFECT_BUTTON_SECTION: return m_buttonSection;
-			case SoundEffect.SOUND_EFFECT_BUTTON_LEVEL: return m_buttonLevel;
-			case SoundEffect.SOUND_EFFECT_LEVEL_START: return m_levelStart;
-			case SoundEffect.SOUND_EFFECT_LEVEL_END: return m_levelEnd;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_SELECT: return m_buttonSelect;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_BACK: return m_buttonBack;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_ARROW: return m_buttonArrow;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_SECTION: return m_buttonSection;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_LEVEL: return m_buttonLevel;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_LETTER_SLOT: return m_buttonLetterSlot;
+
+			case SoundEffect.Type.SOUND_EFFECT_LEVEL_START: return m_levelStart;
+			case SoundEffect.Type.SOUND_EFFECT_LEVEL_END: return m_levelEnd;
+			case SoundEffect.Type.SOUND_EFFECT_LEVEL_SPAWN_LIGHT: return m_levelSpawnLight;
 		}
 		return null;
 	}

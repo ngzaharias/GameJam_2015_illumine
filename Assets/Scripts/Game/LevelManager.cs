@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
 	{
 		get
 		{
+			if (m_instance == null)
+				m_instance = GameObject.FindObjectOfType<LevelManager>();
 			return m_instance;
 		}
 	}
@@ -25,11 +27,6 @@ public class LevelManager : MonoBehaviour
 
 	private LevelData m_currentLevel;
 	public LevelData CurrentLevel { get { return m_currentLevel; } set { m_currentLevel = value; } }
-
-	void Awake()
-	{
-		m_instance = this;
-	}
 
 	void Start()
 	{
@@ -112,6 +109,9 @@ public class LevelManager : MonoBehaviour
 
 	public void StartLevel(LevelData data)
 	{
+		AudioClip clip = SoundDatabase.Instance.GetSoundEffect(SoundEffect.Type.SOUND_EFFECT_LEVEL_START);
+		SoundManager.Instance.PlayAudioClip(clip);
+
 		LightManager.Instance.FadePointLights(0.0f, 0.5f);
 		
 		SpawnModel(data.model, Utility.RandomQuaternion(), 1.0f);
@@ -123,6 +123,9 @@ public class LevelManager : MonoBehaviour
 
 	public void CompleteLevel()
 	{
+		AudioClip clip = SoundDatabase.Instance.GetSoundEffect(SoundEffect.Type.SOUND_EFFECT_LEVEL_END);
+		SoundManager.Instance.PlayAudioClip(clip);
+
 		LetterSlotManager.Instance.ToggleSlots(false);
 		UIStateManager.Instance.PushState("LEVEL_END_MENU");
 	}

@@ -9,27 +9,27 @@ public class SoundManager : MonoBehaviour
 	{
 		get
 		{
+			if (m_instance == null)
+				m_instance = GameObject.FindObjectOfType<SoundManager>();
 			return m_instance;
 		}
 	}
 
-	public void PlaySoundEffect(int typeInt)
+	public void PlayAudioClip(AudioClip clip)
 	{
-		SoundEffect type = (SoundEffect)typeInt;
-		AudioClip soundEffect = SoundDatabase.Instance.GetSoundEffectFromType(type);
-		if (soundEffect != null)
+		if (clip != null)
 		{
 			GameObject obj = new GameObject();
-			obj.name = soundEffect.name;
+			obj.name = clip.name;
 			AudioSource source = obj.AddComponent<AudioSource>();
-			source.clip = soundEffect;
+			source.clip = clip;
 			source.Play();
 
-			Destroy(obj, soundEffect.length);
+			Destroy(obj, clip.length);
 		}
-		else 
+		else
 		{
-			Debug.LogWarning("PlaySoundEffect: AudioClip " + soundEffect.name + " doesn't exist");
+			Debug.LogWarning("PlaySoundEffect: AudioClip doesn't exist");
 		}
 	}
 }
