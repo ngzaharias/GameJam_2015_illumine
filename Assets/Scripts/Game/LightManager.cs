@@ -76,7 +76,7 @@ public class LightManager : MonoBehaviour
 			m_pointLights.RemoveAt(0);
 		}
 
-		AudioClip clip = SoundDatabase.Instance.GetSoundEffect(SoundEffect.Type.SOUND_EFFECT_LEVEL_SPAWN_LIGHT);
+		AudioClip clip = SoundDatabase.Instance.GetSoundEffect(SoundEffect.Type.SOUND_EFFECT_LIGHT_SPAWN);
 		SoundManager.Instance.PlayAudioClip(clip);
 	}
 }

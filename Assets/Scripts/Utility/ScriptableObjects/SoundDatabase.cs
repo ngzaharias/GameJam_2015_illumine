@@ -16,31 +16,41 @@ public class SoundDatabase : ScriptableObject
         }
     }
 
-	public AudioClip m_buttonSelect = null;
-	public AudioClip m_buttonBack = null;
-	public AudioClip m_buttonArrow = null;
-	public AudioClip m_buttonSection = null;
-	public AudioClip m_buttonLevel = null;
-	public AudioClip m_buttonLetterSlot= null;
+	public AudioClip m_buttonEnter = null;
+	public AudioClip m_buttonPress = null;
+
+	public AudioClip m_buttonPressBack = null;
+	public AudioClip m_buttonPressArrow = null;
+	public AudioClip m_buttonPressToggle = null;
+	public AudioClip m_buttonPressLetterAdd = null;
+	public AudioClip m_buttonPressLetterRemove = null;
+	public AudioClip m_buttonPressSection = null;
+	public AudioClip m_buttonPressLevel = null;
 
 	public AudioClip m_levelStart = null;
-	public AudioClip m_levelEnd = null;
-	public AudioClip m_levelSpawnLight = null;
+	public AudioClip m_levelComplete = null;
+
+	public AudioClip m_lightSpawn = null;
 
 	public AudioClip GetSoundEffect(SoundEffect.Type type)
 	{
 		switch (type)
 		{
-			case SoundEffect.Type.SOUND_EFFECT_BUTTON_SELECT: return m_buttonSelect;
-			case SoundEffect.Type.SOUND_EFFECT_BUTTON_BACK: return m_buttonBack;
-			case SoundEffect.Type.SOUND_EFFECT_BUTTON_ARROW: return m_buttonArrow;
-			case SoundEffect.Type.SOUND_EFFECT_BUTTON_SECTION: return m_buttonSection;
-			case SoundEffect.Type.SOUND_EFFECT_BUTTON_LEVEL: return m_buttonLevel;
-			case SoundEffect.Type.SOUND_EFFECT_BUTTON_LETTER_SLOT: return m_buttonLetterSlot;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_ENTER: return m_buttonEnter;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_PRESS: return m_buttonPress;
+
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_PRESS_BACK: return m_buttonPressBack;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_PRESS_ARROW: return m_buttonPressArrow;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_PRESS_TOGGLE: return m_buttonPressToggle;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_PRESS_LETTER_ADD: return m_buttonPressLetterAdd;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_PRESS_LETTER_REMOVE: return m_buttonPressLetterRemove;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_PRESS_SECTION: return m_buttonPressSection;
+			case SoundEffect.Type.SOUND_EFFECT_BUTTON_PRESS_LEVEL: return m_buttonPressLevel;
 
 			case SoundEffect.Type.SOUND_EFFECT_LEVEL_START: return m_levelStart;
-			case SoundEffect.Type.SOUND_EFFECT_LEVEL_END: return m_levelEnd;
-			case SoundEffect.Type.SOUND_EFFECT_LEVEL_SPAWN_LIGHT: return m_levelSpawnLight;
+			case SoundEffect.Type.SOUND_EFFECT_LEVEL_COMPLETE: return m_levelComplete;
+
+			case SoundEffect.Type.SOUND_EFFECT_LIGHT_SPAWN: return m_lightSpawn;
 		}
 		return null;
 	}

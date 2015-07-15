@@ -123,7 +123,7 @@ public class LevelManager : MonoBehaviour
 
 	public void CompleteLevel()
 	{
-		AudioClip clip = SoundDatabase.Instance.GetSoundEffect(SoundEffect.Type.SOUND_EFFECT_LEVEL_END);
+		AudioClip clip = SoundDatabase.Instance.GetSoundEffect(SoundEffect.Type.SOUND_EFFECT_LEVEL_COMPLETE);
 		SoundManager.Instance.PlayAudioClip(clip);
 
 		LetterSlotManager.Instance.ToggleSlots(false);
