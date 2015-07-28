@@ -110,7 +110,7 @@ public class LevelManager : MonoBehaviour
 	public void StartLevel(LevelData data)
 	{
 		AudioClip clip = SoundDatabase.Instance.GetSoundEffect(SoundEffect.Type.SOUND_EFFECT_LEVEL_START);
-		SoundManager.Instance.PlayAudioClip(clip);
+		SoundManager.Instance.PlayAudioClip(clip, 1.0f);
 
 		LightManager.Instance.FadePointLights(0.0f, 0.5f);
 		
